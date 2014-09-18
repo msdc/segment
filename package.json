@@ -1,7 +1,7 @@
 {
-  "name": "NodeWebExpress",
-  "version": "0.0.0",
-  "description": "NodeWebExpress",
+  "name": "NodeSegmentDemo",
+  "version": "1.0.0",
+  "description": "NodeSegmentDemo",
   "main": "app.js",
   "author": {
     "name": "wang",
