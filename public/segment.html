@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/segment.js"></script>
+    <title>新闻分词测试</title>
+    <style type="text/css">
+        .addRowHeight {
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label" for="news_content">新闻内容：</label>
+            <textarea class="form-control" id="news_content" style="height: 160px;"></textarea>
+        </div>
+        <button class="btn btn-primary" id="btn_segment">分词</button>
+    </div>
+
+    <div class="row addRowHeight"></div>
+
+    <div class="row">
+        <h4>测试结果：</h4>
+        <table class="table table-bordered" id="grade_result">
+            <thead>
+            <tr>
+                <td>Flag</td>
+                <td>情感倾向值</td>
+                <td>分词总得分</td>
+                <td>分词为正总得分</td>
+                <td>分词为负总得分</td>
+                <td>分词得分为正的个数</td>
+                <td>分词得分为负的个数</td>
+                <td>没有感情倾向值的词的个数</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>通过系统词库-判断全文</td>
+                <td id="emotionScore">0</td>
+                <td id="totalScore">0</td>
+                <td id="positiveScore">0</td>
+                <td id="negativeScore">0</td>
+                <td id="positiveWordsCount">0</td>
+                <td id="negativeWordsCount">0</td>
+                <td id="noScoreWordsCount">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row addRowHeight"></div>
+
+    <div class="row">
+        <h4>为正的情感倾向词集合：</h4>
+
+        <p id="positiveWords"></p>
+    </div>
+
+    <div class="row addRowHeight"></div>
+
+    <div class="row">
+        <h4>为负的情感倾向词集合：</h4>
+
+        <p id="negativeWords"></p>
+    </div>
+
+    <div class="row addRowHeight"></div>
+
+    <div class="row">
+        <h4>分词结果</h4>
+
+        <p id="segment_result"></p>
+    </div>
+
+</div>
+
+</body>
+</html>
