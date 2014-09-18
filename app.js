@@ -9,8 +9,11 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json',limit:'50mb' }));
 
 app.use(express.static(__dirname + '/public'));
 
-app.post("/newsSegment",segment.newsSegment);
-app.post("/gradeSplit",segment.gradeSplit);
+//segment
+app.post("/maintain/newsSegment",segment.newsSegment);
+app.post("/maintain/gradeSplit",segment.gradeSplit);
+app.get("/maintain/loadGradeWords",segment.loadGradeWords);
+app.post("/maintain/updateGradeWords",segment.updateGradeWords);
 
 app.listen(1337, function () {
     console.log('Express server listening on port 1337');

@@ -13,7 +13,18 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="menu_tab">
+    <div class="row">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#" name="segment">新闻分词测试</a></li>
+            <li role="presentation"><a href="#" name="grade">词语极性值修改</a></li>
+        </ul>
+    </div>
+</div>
+<div class="addRowHeight"></div>
+
+<!--新闻分词页-->
+<div class="container" id="news_segment">
     <div class="row">
         <div class="form-group">
             <label class="control-label" for="news_content">新闻内容：</label>
@@ -80,5 +91,26 @@
 
 </div>
 
+<!--极性词修改页-->
+<div class="container" id="grade_split" style="display: none">
+    <div class="row">
+        <button class="btn btn-primary" id="btn_load_words">加载极性词</button>
+        <div class="row addRowHeight"></div>
+        <table class="table table-bordered" id="table_grade">
+            <thead>
+            <tr>
+                <td>序号</td>
+                <td>名称</td>
+                <td>名称</td>
+                <td>极性值</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

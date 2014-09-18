@@ -1,10 +1,11 @@
 /**
- * Created by wang on 2014/9/16.
+ * Created by wang on 2014/9/18.
  */
 var easypost = require('easypost');
 var Segment=require('segment').Segment;
 var fs = require('fs');
-var path = require('path');
+var path = require('path'),
+    dictFileName=path.resolve("lib", "dict/", "./grade.txt");
 var segment=new Segment();
 // 使用默认的识别模块及字典，载入字典文件需要1秒，仅初始化时执行一次即可
 segment.useDefault();
@@ -28,7 +29,6 @@ exports.gradeSplit=function(req,res){
 //极性划分
 function gradeSplit(words){
     var splitResult={};
-    var filename = path.resolve("webAPI", "dict/", "./grade.txt");
     var totalScore=0;//总分
     var positiveScore=0;//正得分
     var negativeScore=0;//负得分
@@ -38,11 +38,11 @@ function gradeSplit(words){
     var negativeWords=[];//负情感词集合
     var noScoreWordsCount=0;//没有情感倾向词个数
 
-    if (!fs.existsSync(filename)) {
-        throw Error('Cannot find dict file "' + filename + '".');
+    if (!fs.existsSync(dictFileName)) {
+        throw Error('Cannot find dict file "' + dictFileName + '".');
 
     } else {
-        var data = fs.readFileSync(filename, 'utf8');
+        var data = fs.readFileSync(dictFileName, 'utf8');
         data = data.split(/\r?\n/);
 
         for (var wordIndex in words) {
@@ -86,5 +86,58 @@ function gradeSplit(words){
 
         return splitResult;
     }
+};
+
+//加载极性词
+exports.loadGradeWords=function(req,res){
+    var data=[];
+    if (!fs.existsSync(dictFileName)) {
+        throw Error('Cannot find dict file "' + dictFileName + '".');
+
+    } else {
+        data = fs.readFileSync(dictFileName, 'utf8');
+        data = data.split(/\r?\n/);
+    }
+    res.send(data);
+};
+
+//更新极性词值
+exports.updateGradeWords=function(req,res){
+    easypost.get(req, res, function (postData){
+        var data=[];
+        if (!fs.existsSync(dictFileName)) {
+            throw Error('Cannot find dict file "' + dictFileName + '".');
+
+        } else {
+            data = fs.readFileSync(dictFileName, 'utf8');
+            data = data.split(/\r?\n/);
+        }
+
+        var updatedData=[];
+
+        //data是行数组
+        for(var lineIndex in data){
+            var line = data[lineIndex];
+            var blocks = line.split('\t');//列数组
+            if(blocks.length>2){
+                if(blocks[0]==postData.w1&&blocks[1]==postData.w2){
+                    blocks[2]=postData.grade;
+                    line=blocks.join('\t');
+                }
+            }
+            updatedData.push(line);
+        }
+
+        //更新后的文件
+        var updatedFileString=updatedData.join('\r\n');
+        fs.writeFile(dictFileName,updatedFileString,function(err){
+            if(err){
+                console.log(err);
+                res.send({success:false});
+            }else{
+                res.send({success:true});
+            }
+        });
+    });
 };
 
